@@ -2,6 +2,7 @@ const prodConfig = require('./webpack.prod')
 const devConfig = require('./webpack.dev')
 const path = require('path')
 const webpackMerge = require('webpack-merge')
+const defaultConfig = require('../config/default.config')
 const commonConfig = {
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -12,7 +13,7 @@ const commonConfig = {
 };
 
 module.exports = (env, args) => {
-    if (args?.mode == 'production' || env == 'production') {
+    if (defaultConfig.env == 'production' || args?.mode == 'production') {
         return webpackMerge(commonConfig, prodConfig)
     } else {
         return webpackMerge(commonConfig, devConfig)

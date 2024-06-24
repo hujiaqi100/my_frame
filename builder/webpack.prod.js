@@ -1,18 +1,26 @@
 const path = require('path');
-const rootPath = path.resolve(__dirname, '../')
+const rootPath = path.resolve(__dirname, '../assets')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const defaultConfig = require('../config/default.config')
 const SsrBuildPlugin = require('./plugins/ssr-build-plugin')
+const TerserWebpackPlugin = require('terser-webpack-plugin');
 module.exports = {
     entry:
     {
         app: [
-            path.resolve(rootPath, 'assets/client.jsx')
+            path.resolve(rootPath, 'client.jsx')
         ]
     },
     mode: 'production',
     optimization: {
         usedExports: true,
+        // minimize: true,
+        // minimizer: [new TerserWebpackPlugin()],
         splitChunks: {
             chunks: 'all',
+            minSize: 10000,
+            maxSize: 20000,
+            minChunks: 2,
             maxAsyncRequests: 5,
             maxInitialRequests: 3,
             cacheGroups: {
@@ -50,7 +58,21 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 loader: require.resolve('babel-loader'),
                 options: {
-                    babelrc: true,
+                    presets: [
+                        "@babel/preset-react",
+                        "@babel/preset-env"
+                    ],
+                    plugins: [
+                        "@babel/plugin-transform-runtime",
+                        "@babel/plugin-syntax-jsx",
+                        "@babel/plugin-syntax-dynamic-import",
+                        [
+                            "@babel/plugin-transform-react-jsx",
+                            {
+                                "runtime": "automatic"
+                            }
+                        ]
+                    ]
                 }
             },
         ]
@@ -62,6 +84,10 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js', '.jsx'],
     },
     plugins: [
-        new SsrBuildPlugin()
+        new HtmlWebpackPlugin({
+            template: path.resolve(rootPath, '../public/index.html'),
+            publicPath: defaultConfig.baseName
+        }),
+        // new SsrBuildPlugin()
     ],
 };
