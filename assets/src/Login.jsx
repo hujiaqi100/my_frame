@@ -1,8 +1,10 @@
 import { Outlet } from 'react-router-dom'
+import { Button } from 'antd'
 const Login = () => {
     return (
         <div>
-      aaddasddsdsdfdfd
+            home
+            <Button >a</Button>
             <Outlet />
         </div>
     )

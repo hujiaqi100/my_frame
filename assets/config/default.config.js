@@ -1,3 +1,4 @@
 module.exports = {
-    baseName: '/dqp'
+    baseName: '/dqp',
+    ssr: true
 }

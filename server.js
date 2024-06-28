@@ -12,14 +12,17 @@ const { serverRender } = require('./middleware/serverRender.js')
 const history = require('connect-history-api-fallback');
 app.use(defaultConfig.baseName, express.static('dist'))
 if (env == 'development') {
-    app.use(history({
-        index: `${defaultConfig.baseName}/index.html`
-    }));
     app.use(webpackDevMiddleware(compiler, {
         publicPath: defaultConfig.baseName
     }));
     app.use(webpackHotMiddleware(compiler));
-    // app.use(serverRender)
+    if (defaultConfig.ssr) {
+        app.use(serverRender)
+    } else {
+        app.use(history({
+            index: `${defaultConfig.baseName}/index.html`
+        }));
+    }
 
 } else {
     app.get('*', (req, res) => {

@@ -88,10 +88,6 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js', '.jsx'],
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new HtmlWebpackPlugin({
-            template: path.resolve(rootPath, '../public/index.html'),
-            publicPath: defaultConfig.baseName
-        }),
+
     ],
 };

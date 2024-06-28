@@ -22,19 +22,20 @@ export default {
             ],
             plugins: [
                 '@babel/plugin-transform-runtime',
+                "@babel/plugin-transform-react-jsx",
             ],
             extensions: [".js", ".jsx", ".tsx", ".ts"],
         }),
         json(),
+        commonjs(),
         resolve({
             extensions: [".js", ".jsx", ".tsx", ".ts"],
         }),
-        commonjs(),
         alias({
             entries: [
                 { find: '@', replacement: path.resolve(__dirname, 'assets') },
             ]
         }),
     ],
-    external: ['antd', 'react', 'react-dom/server', 'react-router-dom', 'react-router-config']
+    external: ['antd', 'react', 'react-dom', 'react-router-dom']
 };

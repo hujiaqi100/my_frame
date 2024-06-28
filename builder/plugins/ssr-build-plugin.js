@@ -7,7 +7,6 @@ class SsrBuildWebpackPlugin {
         compiler.hooks.afterEmit.tap('SsrBuildWebpackPlugin', (compilation) => {
             const path1 = path.resolve(__dirname, '../../server_render/app.cjs.js')
             process.execSync(`rm -rf ${path1}`)
-            // process.execSync(`npm run build`)
         })
         compiler.hooks.done.tap('SsrBuildWebpackPlugin', (compilation) => {
             const cmd = 'npm run rollup'

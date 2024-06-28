@@ -1,7 +1,6 @@
 
 const path = require('path')
 const componetsFilePath = path.resolve(__dirname, '../server_render/app.cjs.js')
-
 const serverRender = (req, res, next) => {
     if (process.env.enviroment == 'development') {
         next()

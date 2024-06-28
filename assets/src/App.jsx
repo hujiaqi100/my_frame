@@ -1,6 +1,6 @@
 const App = () => {
     return <div>
-        ddddddd
+        app
     </div>
 }
 export default App
