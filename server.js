@@ -10,15 +10,22 @@ const fs = require('fs')
 const compiler = webpack(config(env));
 const { serverRender } = require('./middleware/serverRender.js')
 const history = require('connect-history-api-fallback');
+const React = require('react')
+global.React = React
 app.use(defaultConfig.baseName, express.static('dist'))
 if (env == 'development') {
     app.use(webpackDevMiddleware(compiler, {
         publicPath: defaultConfig.baseName
     }));
-    app.use(webpackHotMiddleware(compiler));
     if (defaultConfig.ssr) {
+        app.use((req, res, next) => {
+            req.outPutPath = compiler.outputPath
+            req.outputFileSystem = compiler.outputFileSystem
+            next()
+        })
         app.use(serverRender)
     } else {
+        app.use(webpackHotMiddleware(compiler));
         app.use(history({
             index: `${defaultConfig.baseName}/index.html`
         }));

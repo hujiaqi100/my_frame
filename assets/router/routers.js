@@ -7,13 +7,13 @@ export default [
         element: <Login />,
         children: [
             {
-                path: '/dd',
+                path: `/dd`,
                 element: <App />,
             }
         ]
     },
-    {
-        path: '*',
-        element: <NotFound />
-    }
+    // {
+    //     path: '*',
+    //     element: <NotFound />
+    // }
 ];

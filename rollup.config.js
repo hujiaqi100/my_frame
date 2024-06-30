@@ -37,5 +37,5 @@ export default {
             ]
         }),
     ],
-    external: ['antd', 'react', 'react-dom', 'react-router-dom']
+    external: ['antd', 'react', 'react-dom', 'react-router-dom', 'react-dom/server', 'react-router-dom/server']
 };

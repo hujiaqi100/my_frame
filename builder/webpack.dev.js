@@ -1,16 +1,6 @@
 const path = require('path');
 const rootPath = path.resolve(__dirname, '../assets')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const webpack = require('webpack');
-const defaultConfig = require('../config/default.config')
 module.exports = {
-    entry:
-    {
-        app: [
-            'webpack-hot-middleware/client?reload=true',
-            path.resolve(rootPath, 'client.jsx')
-        ]
-    },
     mode: 'development',
     devtool: 'inline-source-map',
     optimization: {
@@ -87,7 +77,4 @@ module.exports = {
         },
         extensions: ['.tsx', '.ts', '.js', '.jsx'],
     },
-    plugins: [
-
-    ],
 };

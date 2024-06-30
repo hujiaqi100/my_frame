@@ -2,15 +2,8 @@ const path = require('path');
 const rootPath = path.resolve(__dirname, '../assets')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const defaultConfig = require('../config/default.config')
-const SsrBuildPlugin = require('./plugins/ssr-build-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 module.exports = {
-    entry:
-    {
-        app: [
-            path.resolve(rootPath, 'client.jsx')
-        ]
-    },
     mode: 'production',
     optimization: {
         usedExports: true,
@@ -83,11 +76,4 @@ module.exports = {
         },
         extensions: ['.tsx', '.ts', '.js', '.jsx'],
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: path.resolve(rootPath, '../public/index.html'),
-            publicPath: defaultConfig.baseName
-        }),
-        // new SsrBuildPlugin()
-    ],
 };

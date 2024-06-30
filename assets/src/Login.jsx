@@ -4,7 +4,9 @@ const Login = () => {
     return (
         <div>
             home
-            <Button >a</Button>
+            <Button onClick={() => {
+                console.log(1);
+            }}>asadddddas</Button>
             <Outlet />
         </div>
     )
