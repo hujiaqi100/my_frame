@@ -5,7 +5,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var server = require('react-dom/server');
 var server$1 = require('react-router-dom/server');
 var reactRouterDom = require('react-router-dom');
-var antd = require('antd');
 var React$1 = require('react');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -18,11 +17,9 @@ var App = function App() {
 var App$1 = App;
 
 var Login = function Login() {
-  return /*#__PURE__*/React.createElement("div", null, "home", /*#__PURE__*/React.createElement(antd.Button, {
-    onClick: function onClick() {
-      console.log(1);
-    }
-  }, "asadddddas"), /*#__PURE__*/React.createElement(reactRouterDom.Outlet, null));
+  return /*#__PURE__*/React.createElement("div", {
+    className: "home"
+  }, /*#__PURE__*/React.createElement(reactRouterDom.Outlet, null));
 };
 var Login$1 = Login;
 

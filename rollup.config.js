@@ -3,13 +3,15 @@ import alias from '@rollup/plugin-alias';
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json'
+import postcss from "rollup-plugin-postcss";
+
 import path from 'path'
 export default {
     input: path.resolve(__dirname, 'assets/server.js'),
     output: [
         {
             file: path.resolve(__dirname, 'server_render/app.cjs.js'),
-            format: 'cjs'
+            format: 'cjs',
         },
     ],
     plugins: [
@@ -28,6 +30,13 @@ export default {
         }),
         json(),
         commonjs(),
+        postcss({
+            extract: path.resolve(__dirname, 'server_render/app.css'),
+            minimize: true,
+            use: {
+                less: true,
+            },
+        }),
         resolve({
             extensions: [".js", ".jsx", ".tsx", ".ts"],
         }),

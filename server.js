@@ -7,10 +7,11 @@ const config = require('./builder/webpack.config.js');
 const env = defaultConfig.env
 const app = express();
 const fs = require('fs')
+const path = require('path')
 const compiler = webpack(config(env));
 const { serverRender } = require('./middleware/serverRender.js')
 const history = require('connect-history-api-fallback');
-const React = require('react')
+const React = require('react');
 global.React = React
 app.use(defaultConfig.baseName, express.static('dist'))
 if (env == 'development') {
@@ -22,6 +23,20 @@ if (env == 'development') {
             req.outPutPath = compiler.outputPath
             req.outputFileSystem = compiler.outputFileSystem
             next()
+        })
+        app.use((req, res, next) => {
+            let timer
+            const componetsFilePath = path.resolve(__dirname, './server_render/app.cjs.js')
+            const cssFilePath = path.resolve(__dirname, './server_render/app.css')
+            req.componetsFilePath = componetsFilePath
+            req.cssFilePath = cssFilePath
+            timer = setInterval(() => {
+                if (fs.existsSync(componetsFilePath) && fs.existsSync(cssFilePath)) {
+                    clearInterval(timer)
+                    timer = null
+                    next()
+                }
+            }, 100)
         })
         app.use(serverRender)
     } else {

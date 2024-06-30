@@ -14,6 +14,32 @@ const commonConfig = {
         filename: '[name].js',
         chunkFilename: '[name].chunk.js',
     },
+    module: {
+
+        rules: [
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader", "postcss-loader"],
+            },
+            {
+                test: /\.less$/i,
+                use: [
+                    {
+                        loader: 'style-loader',
+                    },
+                    {
+                        loader: 'css-loader',
+                    },
+                    {
+                        loader: 'postcss-loader'
+                    },
+                    {
+                        loader: 'less-loader',
+                    }
+                ],
+            }
+        ]
+    }
 };
 module.exports = (env, args) => {
     if (defaultConfig.env == 'development') {
