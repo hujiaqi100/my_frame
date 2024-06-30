@@ -4,9 +4,11 @@ import AppRouters from './router/appRouters';
 import React from 'react'
 import { matchRoutes } from 'react-router-dom'
 import routers from './router/routers';
+import defaultConfig from './config/default.config';
+const { baseName } = defaultConfig
 const render = (path, context = {}) => {
     return renderToString((
-        <StaticRouter location={path} context={context}>
+        <StaticRouter basename={baseName} location={path} context={context}>
             <AppRouters />
         </StaticRouter>
     ));

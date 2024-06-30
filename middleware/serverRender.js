@@ -31,8 +31,6 @@ const serverRender = (req, res, next) => {
                     </html>
                 `)
     })
-
-
 }
 module.exports = {
     serverRender

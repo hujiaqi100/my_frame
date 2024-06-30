@@ -26,6 +26,11 @@ var Login = function Login() {
 };
 var Login$1 = Login;
 
+var NotFoundPage = function NotFoundPage() {
+  return /*#__PURE__*/React.createElement("div", null, "404");
+};
+var NotFound = NotFoundPage;
+
 var routers = [{
   path: '/',
   element: /*#__PURE__*/React.createElement(Login$1, null),
@@ -33,12 +38,10 @@ var routers = [{
     path: "/dd",
     element: /*#__PURE__*/React.createElement(App$1, null)
   }]
-}
-// {
-//     path: '*',
-//     element: <NotFound />
-// }
-];
+}, {
+  path: '*',
+  element: /*#__PURE__*/React.createElement(NotFound, null)
+}];
 
 var AppRouters = function AppRouters() {
   var ele = reactRouterDom.useRoutes(routers);
@@ -46,9 +49,22 @@ var AppRouters = function AppRouters() {
 };
 var AppRouters$1 = AppRouters;
 
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
+var default_config = {
+  baseName: '/dqp',
+  ssr: true
+};
+
+var defaultConfig = /*@__PURE__*/getDefaultExportFromCjs(default_config);
+
+var baseName = defaultConfig.baseName;
 var render = function render(path) {
   var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   return server.renderToString( /*#__PURE__*/React__default["default"].createElement(server$1.StaticRouter, {
+    basename: baseName,
     location: path,
     context: context
   }, /*#__PURE__*/React__default["default"].createElement(AppRouters$1, null)));

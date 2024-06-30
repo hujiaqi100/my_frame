@@ -12,8 +12,8 @@ export default [
             }
         ]
     },
-    // {
-    //     path: '*',
-    //     element: <NotFound />
-    // }
+    {
+        path: '*',
+        element: <NotFound />
+    }
 ];
