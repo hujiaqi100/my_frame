@@ -49,7 +49,8 @@ module.exports = {
                 options: {
                     presets: [
                         "@babel/preset-react",
-                        "@babel/preset-env"
+                        "@babel/preset-env",
+                        "@babel/preset-typescript"
                     ],
                     plugins: [
                         "@babel/plugin-transform-runtime",
@@ -66,7 +67,7 @@ module.exports = {
             },
             {
                 enforce: 'pre',
-                test: /\.js$/,
+                test: /\.(js|jsx|ts|tsx)$/,
                 loader: 'source-map-loader',
             },
         ]

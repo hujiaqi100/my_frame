@@ -12,8 +12,14 @@ const compiler = webpack(config(env));
 const { serverRender } = require('./middleware/serverRender.js')
 const history = require('connect-history-api-fallback');
 const React = require('react');
+const bodyParser = require('body-parser');
+const chartRouter = require('./dao/charts.js');
+app.use(bodyParser.json());
+
 global.React = React
 app.use(defaultConfig.baseName, express.static('dist'))
+app.use(express.static('public'))
+app.use(chartRouter);
 if (env == 'development') {
     app.use(webpackDevMiddleware(compiler, {
         publicPath: defaultConfig.baseName

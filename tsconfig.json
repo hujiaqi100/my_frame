@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "jsx": "preserve",
+        "esModuleInterop": true,
+        // "sourceMap": true,
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        // "strict": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+    },
+    "include": [
+        "./**/*.ts",
+        "./**/*.tsx"
+    ]
+}

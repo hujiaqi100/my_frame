@@ -15,12 +15,12 @@ const commonConfig = {
         chunkFilename: '[name].chunk.js',
     },
     module: {
-
         rules: [
             {
                 test: /\.css$/i,
                 use: ["style-loader", "css-loader", "postcss-loader"],
             },
+
             {
                 test: /\.less$/i,
                 use: [

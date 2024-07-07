@@ -1,16 +1,17 @@
-import App from "@/src/App";
-import Login from "@/src/Login";
 import NotFound from './notFound'
+import App from '@/src/app.tsx'
+import Main from '@/src/devQCA'
 export default [
     {
         path: '/',
-        element: <Login />,
-        children: [
-            {
-                path: `/dd`,
-                element: <App />,
-            }
-        ]
+        element: <Main />,
+        loadData: Main.loadData
+        // children: [
+        //     {
+        //         path: `/dd`,
+        //         element: <App />,
+        //     }
+        // ]
     },
     {
         path: '*',

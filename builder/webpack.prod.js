@@ -1,8 +1,5 @@
 const path = require('path');
 const rootPath = path.resolve(__dirname, '../assets')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const defaultConfig = require('../config/default.config')
-const TerserWebpackPlugin = require('terser-webpack-plugin');
 module.exports = {
     mode: 'production',
     optimization: {
