@@ -7,11 +7,11 @@ import { message, Popconfirm } from "antd";
 export const aveConfig = function () {
   return [
     {
-      title: '基础信息',
+      title: 'qq',
       name: 'basic',
       formList: [
         {
-          label: '企业名称',
+          label: 'vv',
           name: 'enterpriseName',
           rules: [{ required: true, message: '' }],
           type: 'select',
@@ -19,11 +19,11 @@ export const aveConfig = function () {
             return (form, content, setContent, traceTree) => {
               return [
                 {
-                  condition: c == '起落架',
+                  condition: c == 'ss',
                   target: 'airms_top'
                 },
                 {
-                  condition: c == '电子维修',
+                  condition: c == 'aa',
                   target: 'airf_top'
                 }
               ]
@@ -37,64 +37,64 @@ export const aveConfig = function () {
             },
             options: [
               {
-                label: '起落架',
-                value: '起落架',
+                label: 'ss',
+                value: 'dd',
               },
               {
-                label: '电子维修',
-                value: '电子维修',
+                label: 'aa',
+                value: 'aa',
               },
             ]
           },
         },
         {
-          label: '联系人',
+          label: 'dd',
           name: 'contactName',
         },
         {
-          label: '联系电话',
+          label: 'vv',
           name: 'contactPhone',
         },
       ]
     },
     {
-      title: '航材供应',
+      title: 'ww',
       name: 'airms_top',
       show: false,
       formList: [
         {
-          label: '供应配置',
+          label: 'ee',
           name: 'airms',
           type: 'formList',
-          btnname: '航材供应',
+          btnname: 'ww',
           children: [
             {
-              label: '航材名称',
+              label: 'we',
               name: 'materialName',
             },
             {
-              label: '航材类型',
+              label: 'gg',
               name: 'materialType',
             },
             {
-              label: '自制/外购',
+              label: 'qq',
               name: 'makeWay',
               type: 'select',
               componentOptions: {
                 options: [
                   {
                     value: '1',
-                    label: '外部采购',
+                    label: 'ww',
                   },
                   {
                     value: '2',
-                    label: '自己生产',
+                    label: 'dd',
                   },
                 ]
               }
             },
             {
-              label: '备注',
+              label: 'dd',
               name: 'remark',
             }
           ],
@@ -105,40 +105,40 @@ export const aveConfig = function () {
       ]
     },
     {
-      title: '航材维修',
+      title: 'qq',
       name: 'airf_top',
       show: false,
       formList: [
         {
-          label: '维修配置',
+          label: 'vv',
           name: '',
           type: 'formList',
-          btnname: '航材维修',
+          btnname: 'vv',
           children: [
             {
-              label: '维修名称',
+              label: 'dd',
               name: 'repairName',
             },
             {
-              label: '维修类型',
+              label: 'aa',
               name: 'repairType',
               type: 'select',
               componentOptions: {
                 options: [
                   {
-                    label: '起落架',
-                    value: '起落架',
+                    label: 'ss',
+                    value: 'ss',
                   },
                   {
-                    label: '电子维修',
-                    value: '电子维修',
+                    label: 'dd',
+                    value: 'dd',
                   },
                 ]
               }
 
             },
             {
-              label: '备注',
+              label: 'dd',
               name: 'remark',
             }
           ],
@@ -161,14 +161,14 @@ export const config = (query: () => any[]) => {
   return {
     filterUpList: [
       {
-        label: '企业名称',
+        label: 'aa',
         name: 'enterpriseName',
         componentOptions: {
           placeholder: 'aa'
         }
       },
       {
-        label: '业务类型',
+        label: 'cc',
         name: 'enterpriseType',
         type: 'select',
         reflect: function ([c, v]) {
@@ -188,15 +188,15 @@ export const config = (query: () => any[]) => {
             [
               {
                 value: '1',
-                label: '航材供应',
+                label: 'dd',
               },
               {
                 value: '2',
-                label: '航材维修',
+                label: 'ss',
               },
               {
                 value: '3',
-                label: '航材供应、航材维修',
+                label: 'aa',
               },
             ]
         },
@@ -204,7 +204,7 @@ export const config = (query: () => any[]) => {
     ],
     filterDownList: [
       {
-        label: '企业名称',
+        label: 'dd',
         name: 'enterpriseName',
         componentOptions: {
           placeholder: 'aa'
@@ -270,25 +270,25 @@ export const config = (query: () => any[]) => {
         ),
       },
       {
-        title: '企业名称',
+        title: 'ss',
         dataIndex: 'enterpriseName',
         key: 'enterpriseName',
         tooltip: true
       },
       {
-        title: '联系人',
+        title: 'dd',
         dataIndex: 'contactName',
         key: 'contactName',
         align: 'center',
       },
       {
-        title: '联系电话',
+        title: 'ff',
         dataIndex: 'contactPhone',
         key: 'contactPhone',
         align: 'center',
       },
       {
-        title: '业务',
+        title: 'aa',
         dataIndex: 'enterpriseTypeText',
         key: 'enterpriseTypeText',
         align: 'center',
