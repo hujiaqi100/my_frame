@@ -7,7 +7,6 @@ const SsrBuildPlugin = require('./plugins/ssr-build-plugin')
 const rootPath = path.resolve(__dirname, '../assets')
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
 const commonConfig = {
     output: {
         path: path.resolve(__dirname, '../dist'),

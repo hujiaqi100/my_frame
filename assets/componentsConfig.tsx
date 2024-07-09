@@ -1,10 +1,6 @@
-import { H_Components } from 'h_qca'
+import { H_Components } from './qca/components'
 import FormList from './src/components/FormList'
 export const load = () => {
   const hc = new H_Components
-  hc.setComponents('formList', <FormList />)
+  hc.registerComponent('formList', <FormList />)
 }
-
-
-
-

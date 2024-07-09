@@ -1,24 +1,22 @@
-import React, { useState, memo, useEffect } from 'react'
-import { H_Layout } from 'h_qca'
+import React, { useState, memo, useEffect, useMemo } from 'react'
+import { H_Layout } from '@/qca'
 import { getPageList } from './services'
 import _ from 'lodash'
-import { config } from './own'
+import { H_Form, useInitData } from '../../qca'
+import { filterUpList, queryList, filterDownList, col } from './own'
 import { message } from 'antd'
 const initPage = {
     current: 1,
     size: 30
 }
-const Page = memo((props) => {
-    // const pl = props.context.pl
-    // const _records = pl[0]['pageList'].data.records.map((val, idx) => {
-    //     return {
-    //         ...val,
-    //         key: idx
-    //     }
-    // })
-
+const Page = memo(() => {
     const [load, setLoad] = useState(false)
     const [data, setData] = useState()
+    const hf = useMemo(() => {
+        return new H_Form
+    }, [])
+    const [up, setUp] = useInitData(filterUpList(handleQuery, hf))
+    const [down, setDown] = useInitData(filterDownList(handleQuery, hf))
     const handleQuery = async (params) => {
         setLoad(true)
         try {
@@ -43,23 +41,28 @@ const Page = memo((props) => {
     }
     useEffect(() => {
         handleQuery()
-        H_Layout['args']['layout'].setFieldValue('enterpriseName', '11')
     }, [])
-    const [_config] = H_Layout.useDataAjax(config(handleQuery))
     const layoutDom = (
         <H_Layout>
             <H_Layout.Block>
             </H_Layout.Block>
             <H_Layout.Filter
-                formName={'layout'}
-                query={_config.queryList}
-                filterUp={_config.filterUpList}
-                filterDown={_config.filterDownList}
+                query={queryList()}
+                filterUp={hf.renderForm({
+                    formName: 'up',
+                    config: up,
+                    setConfig: setUp,
+                    formProps: { className: 'flex' }
+                })}
+                filterDown={hf.renderForm(
+                    {
+                        formName: 'down',
+                        config: down,
+                        setConfig: setDown,
+                        formProps: { className: 'flex flex-wrap' }
+                    })}
             />
-            <H_Layout.Block>
-                aa
-            </H_Layout.Block>
-            <H_Layout.Table loading={load} dataSource={_records || _.get(data, 'list', [])} columns={_config.col} />
+            <H_Layout.Table loading={load} dataSource={_.get(data, 'list', [])} columns={col(hf) || []} />
             <H_Layout.Footer
                 total={_.get(data, 'total', 0)}
                 current={_.get(data, 'current', initPage.current)}

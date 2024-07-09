@@ -5,11 +5,10 @@ import AppRouters from './router/appRouters';
 import defaultConfig from './config/default.config';
 import { load } from './componentsConfig'
 import './styles.less'
-import 'h_qca/rollup.build.css'
 load()
 const Start = () => {
     return <BrowserRouter basename={defaultConfig.baseName}>
-        <AppRouters context={window.__data__} />
+        <AppRouters />
     </BrowserRouter>
 };
 const container = document.getElementById('app');

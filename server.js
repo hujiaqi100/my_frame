@@ -21,9 +21,15 @@ app.use(defaultConfig.baseName, express.static('dist'))
 app.use(express.static('public'))
 app.use(chartRouter);
 if (env == 'development') {
+    if (!defaultConfig.ssr) {
+        app.use(history({
+            index: `${defaultConfig.baseName}/index.html`
+        }));
+    }
     app.use(webpackDevMiddleware(compiler, {
         publicPath: defaultConfig.baseName
     }));
+
     if (defaultConfig.ssr) {
         app.use((req, res, next) => {
             req.outPutPath = compiler.outputPath
@@ -47,9 +53,6 @@ if (env == 'development') {
         app.use(serverRender)
     } else {
         app.use(webpackHotMiddleware(compiler));
-        app.use(history({
-            index: `${defaultConfig.baseName}/index.html`
-        }));
     }
 
 } else {

@@ -1,4 +1,4 @@
 module.exports = {
     baseName: '/dqp',
-    ssr: true
+    ssr: false
 }
