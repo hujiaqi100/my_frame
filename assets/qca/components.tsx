@@ -22,7 +22,7 @@ export class H_Components {
       'textArea': <TextArea />,
       'number': <InputNumber />,
       'button': <Button />,
-      'search': <Search />
+      'search': <Search />,
     }
   }
   getComponents(type: string | undefined, args: any) {

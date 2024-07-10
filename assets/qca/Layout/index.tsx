@@ -15,9 +15,6 @@ interface H_LayoutProps {
   children: ReactNode;
 }
 const H_Layout: React.FC<H_LayoutProps> & {
-  args: any,
-  reflectUp: Function,
-  reflectDown: Function,
   Block: React.FC<BlockProps>;
   Filter: React.FC<FilterProps>;
   Table: React.FC<TableProps>;
@@ -32,10 +29,6 @@ const H_Layout: React.FC<H_LayoutProps> & {
     </Context.Provider>
   );
 };
-H_Layout['args'] = {}
-H_Layout['reflectUp'] = () => { }
-H_Layout['reflectDown'] = () => { }
-
 interface BlockProps {
   children: ReactNode;
   [key: string]: any;
@@ -63,29 +56,6 @@ interface QueryProps {
 H_Layout.Filter = (props: FilterProps) => {
   const { query, filterUp, filterDown } = props;
   const context = useContext(Context);
-  useEffect(() => {
-    // const reflectListUp = dp.setReflect(filterUp)
-    // const reflectListDown = dp.setReflect(filterDown)
-    // const reflectList = _.concat(reflectListUp, reflectListDown)
-    // const reflectUp = (name: string) => {
-    //   return function (c: any) {
-    //     const x = reflectList.find(d => d.name == name).reflect
-    //     const a = x(c)(form, up, setUp, dp.traceTree)
-    //     dp.getReflect(a, up, setUp)
-    //   }
-    // }
-    // const reflectDown = (name: string) => {
-    //   return function (c: any) {
-    //     const x = reflectList.find(d => d.name == name).reflect
-    //     const a = x(c)(form, down, setDown, dp.traceTree)
-    //     dp.getReflect(a, down, setDown)
-    //   }
-    // }
-    // _.set(H_Layout, `args.${formName}`, form)
-    // _.set(H_Layout, 'reflectUp', reflectUp)
-    // _.set(H_Layout, 'reflectDown', reflectDown)
-    // form.setFieldsValue(initData)
-  }, [])
   if (!context) {
     throw new Error("H_Layout.Filter must be used within a H_Layout");
   }
@@ -238,34 +208,5 @@ H_Layout.Footer = ({ children, ...props }: FooterProps) => {
       </div>
     }
   </>;
-};
-
-interface DataAjaxConfig {
-  [key: string]: any;
-}
-
-H_Layout.useDataAjax = (config: DataAjaxConfig) => {
-  const [cc, setCc] = useState([]);
-  const query = async (queryList: any[]) => {
-    for await (const i of queryList) {
-      const { componentOptions } = i;
-      if (!_.isEmpty(componentOptions)) {
-        const { getOptions } = componentOptions;
-        if (getOptions) {
-          const data = await getOptions();
-          _.set(componentOptions, 'options', data);
-        }
-      }
-    }
-    setCc(_.cloneDeep(cc));
-  };
-
-  useEffect(() => {
-    (async () => {
-      const { filterUpList, filterDownList } = config;
-      await Promise.all([query(filterUpList), query(filterDownList)]);
-    })();
-  }, []);
-  return [cc];
 };
 export default H_Layout;
