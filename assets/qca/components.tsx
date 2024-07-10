@@ -1,7 +1,8 @@
 import _ from 'lodash'
 import React from 'react';
-import { H_Input, H_Select, H_CheckBox, H_Number, H_TextArea, H_Button } from './own'
 import { DataProcess } from './dataProcess';
+import { Input, Select, Checkbox, InputNumber, Button } from 'antd'
+const { TextArea, Search } = Input
 export class H_Components {
   static instance: H_Components
   private components: any
@@ -15,16 +16,17 @@ export class H_Components {
   }
   private init = () => {
     this.components = {
-      'input': <H_Input />,
-      'select': <H_Select />,
-      'checkbox': <H_CheckBox />,
-      'textArea': <H_TextArea />,
-      'number': <H_Number />,
-      'button': <H_Button />
+      'input': <Input />,
+      'select': <Select />,
+      'checkbox': <Checkbox />,
+      'textArea': <TextArea />,
+      'number': <InputNumber />,
+      'button': <Button />,
+      'search': <Search />
     }
   }
   getComponents(type: string | undefined, args: any) {
-    const _args = new DataProcess().removeSigns(args)
+    const _args = DataProcess.removeSigns(args)
     if (!type) {
       const ReactNode = this.components['input']
       return React.cloneElement(ReactNode, { ..._args })

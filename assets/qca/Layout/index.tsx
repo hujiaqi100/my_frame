@@ -4,8 +4,6 @@ import { Pagination, Table, Form, Button, Dropdown, FormInstance } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import ToolTips from './ToolTips'
-import H_form from '../../qca/renderForm'
-import { DataProcess } from '../dataProcess'
 interface ContextProps {
   showMore: boolean;
   setShowMore: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,8 +14,6 @@ const Context = React.createContext<ContextProps | undefined>(undefined);
 interface H_LayoutProps {
   children: ReactNode;
 }
-const dp = new DataProcess
-const hf = new H_form
 const H_Layout: React.FC<H_LayoutProps> & {
   args: any,
   reflectUp: Function,
@@ -26,7 +22,6 @@ const H_Layout: React.FC<H_LayoutProps> & {
   Filter: React.FC<FilterProps>;
   Table: React.FC<TableProps>;
   Footer: React.FC<FooterProps>;
-  useDataAjax: (config: DataAjaxConfig) => [DataAjaxConfig];
 } = ({ children }) => {
   const [showMore, setShowMore] = useState(false);
   return (

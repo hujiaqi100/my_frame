@@ -1,7 +1,0 @@
-import H_Input from './input'
-import H_Select from './select'
-import H_CheckBox from './checkbox'
-import H_Number from './number'
-import H_TextArea from './textArea'
-import H_Button from './button'
-export { H_Input, H_Select, H_CheckBox, H_Number, H_TextArea, H_Button }
