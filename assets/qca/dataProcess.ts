@@ -32,28 +32,39 @@ export class DataProcess {
     })
   }
   public static traceTree = (name: string, data: any[]): any => {
-    if (data instanceof Object) {
-      for (const val of Object.keys(data)) {
-        if (data[val as any] instanceof Object && data[val as any]['name'] == name) {
-          return data[val as any]
-        }
-        const result = DataProcess.traceTree(name, data[val as any])
-        if (result) {
-          return result
-        }
-      }
-    }
-    if (data instanceof Array) {
-      for (const val of data) {
-        if (val instanceof Object && val['name'] == name) {
-          return val
-        }
-        const result = DataProcess.traceTree(name, val)
-        if (result) {
-          return result
+    const nameList = name.split('-')
+    if (nameList.length === 1) {
+      if (data instanceof Object) {
+        for (const val of Object.keys(data)) {
+          if (data[val as any] instanceof Object && data[val as any]['name'] == name) {
+            return data[val as any]
+          }
+          const result = DataProcess.traceTree(name, data[val as any])
+          if (result) {
+            return result
+          }
         }
       }
+      if (data instanceof Array) {
+        for (const val of data) {
+          if (val instanceof Object && val['name'] == name) {
+            return val
+          }
+          const result = DataProcess.traceTree(name, val)
+          if (result) {
+            return result
+          }
+        }
+      }
+    } else {
+      let _data = data
+      do {
+        const current = nameList.shift() as string
+        _data = this.traceTree(current, _data)
+      } while (nameList.length > 0)
+      return _data
     }
+
   };
   public static isWrappedWithDollarSigns = (str: string) => {
     const regex = /^\$.*\$$/;

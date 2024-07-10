@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import H_Form from '../../qca/renderForm'
 export const filterUpList = (hf: H_Form) => {
+  _.set(filterUpList, 'formName', 'up')
   return [
     {
       label: 'NAME',
@@ -19,34 +20,48 @@ export const filterUpList = (hf: H_Form) => {
           {
             condition: c == '18',
             source: 'up',
-            target: ['name']
+            target: 'sex-name'
           },
-          // {
-          //   condition: c == '18',
-          //   source: 'down',
-          //   target: ['name', 'age']
-          // },
+          {
+            condition: c == '18',
+            source: 'down',
+            target: ['age']
+          },
         ]
       },
       $componentOptions$: {
         $initData$: async function () {
           const result = await [{ label: '18', value: '18' }, { label: '3', value: '3' }]
+          _.set(filterUpList, 'data', result)
           _.set(this, 'options', result)
         },
         onChange: function () {
-          hf.onReflect('up', 'age')(arguments)
-          console.log(hf.getForms());
-
+          hf.onReflect(_.get(filterUpList, 'formName', ''), 'age')(arguments)
         }
+      }
+    },
+    {
+      label: 'SEX',
+      name: 'sex',
+      $type$: 'formList',
+      $componentOptions$: {
+        children: [
+          {
+            label: 'Name',
+            name: 'name',
+          }
+        ]
       }
     }
   ]
 }
 export const filterDownList = (hf: H_Form) => {
+  _.set(filterDownList, 'formName', 'down')
   return [
     {
       label: 'NAME',
       name: 'name',
+
       $type$: 'input',
       $componentOptions$: {
         suffix: 'LOVE'

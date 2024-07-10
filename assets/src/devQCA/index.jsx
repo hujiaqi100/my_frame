@@ -45,7 +45,7 @@ const Page = memo(() => {
     useEffect(() => {
         if (typeof (downDone) === 'boolean' && !downDone) {
             const data = { name: '1', age: '3' }
-            hf.echoData('down', data)
+            hf.echoData(filterDownList.formName, data)
         }
     }, [downDone])
     const layoutDom = (
@@ -55,14 +55,14 @@ const Page = memo(() => {
             <H_Layout.Filter
                 query={queryList(handleQuery, hf)}
                 filterUp={hf.renderForm({
-                    formName: 'up',
+                    formName: filterUpList.formName,
                     config: up,
                     setConfig: setUp,
                     formProps: { className: 'flex' }
                 })}
                 filterDown={hf.renderForm(
                     {
-                        formName: 'down',
+                        formName: filterDownList.formName,
                         config: down,
                         setConfig: setDown,
                         formProps: { className: 'flex flex-wrap' }
@@ -86,7 +86,7 @@ const Page = memo(() => {
         </div>
 
     )
-})
+}, () => true)
 Page.loadData = () => {
     return [
         {
