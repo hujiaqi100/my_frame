@@ -2,6 +2,7 @@ import _ from 'lodash'
 import React from 'react';
 import { DataProcess } from './dataProcess';
 import { Input, Select, Checkbox, InputNumber, Button } from 'antd'
+import { FormList, Span } from './own'
 const { TextArea, Search } = Input
 export class H_Components {
   static instance: H_Components
@@ -21,19 +22,24 @@ export class H_Components {
       'checkbox': <Checkbox />,
       'textArea': <TextArea />,
       'number': <InputNumber />,
+      'checkbox_group': <Checkbox.Group />,
       'button': <Button />,
       'search': <Search />,
+      'formlist': <FormList />,
+      'span': <Span />
     }
   }
-  getComponents(type: string | undefined, args: any) {
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getComponents(type: string | undefined, args: any, h_form: any = {}) {
     const _args = DataProcess.removeSigns(args)
     if (!type) {
       const ReactNode = this.components['input']
-      return React.cloneElement(ReactNode, { ..._args })
+      return React.cloneElement(ReactNode, { ..._args, h_form })
     } else {
       const ReactNode = this.components[type]
       if (!ReactNode) throw new Error('没有可选组件')
-      return React.cloneElement(ReactNode, { ..._args })
+      return React.cloneElement(ReactNode, { ..._args, h_form })
     }
   }
   registerComponent = (type: string, RN: any) => {

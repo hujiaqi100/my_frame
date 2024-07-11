@@ -15,8 +15,13 @@ const Page = memo(() => {
     const hf = useMemo(() => {
         return new H_Form
     }, [])
-    const [up, setUp, upDone] = useInitData(filterUpList(hf))
-    const [down, setDown, downDone] = useInitData(filterDownList(hf))
+    const init = async () => {
+        const data = { name: '1', aaa: '2', age: '1', sex: [{ aa: '1', key: '1' }] }
+        return await data
+    }
+    const [up, setUp, upDone] = useInitData(filterUpList, hf, init)
+    const [down, setDown, downDone] = useInitData(filterDownList, hf, init)
+
     const handleQuery = async (params) => {
         setLoad(true)
         try {
@@ -42,12 +47,6 @@ const Page = memo(() => {
     useEffect(() => {
         handleQuery()
     }, [])
-    useEffect(() => {
-        if (typeof (downDone) === 'boolean' && !downDone) {
-            const data = { name: '1', age: '3' }
-            hf.echoData(filterDownList.formName, data)
-        }
-    }, [downDone])
     const layoutDom = (
         <H_Layout>
             <H_Layout.Block>

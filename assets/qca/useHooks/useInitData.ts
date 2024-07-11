@@ -21,17 +21,23 @@ const initTree = async (data: any) => {
         }
     }
 }
-export const useInitData = (config: any) => {
-    const [cc, setCc] = useState(config);
+export const useInitData = (config: any, hf, init) => {
+    const [cc, setCc] = useState(config(hf));
+    const [data, setData] = useState()
     const [done, setDone] = useState<boolean | undefined>()
     useEffect(() => {
         (async () => {
-            const _cc = _.cloneDeep(cc)
+            const _cc = _.cloneDeep(config(hf))
             setDone(true)
             await initTree(_cc)
-            setDone(false)
-            setCc(_cc)
+            const data = await init()
+            setData(() => data)
+            const dd = hf.echoData(data, _cc)
+            setCc(() => dd)
         })()
     }, []);
+    useEffect(() => {
+        hf.getForm(config.formName).setFieldsValue(data)
+    }, [data])
     return [cc, setCc, done];
 }

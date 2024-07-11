@@ -74,23 +74,23 @@ export class DataProcess {
     const keys = Object.keys(element).filter(d => DataProcess.isWrappedWithDollarSigns(d))
     return _.omit(element, keys)
   }
-  public static reset = (data: any[], tree: any[]) => {
-    if (data instanceof Object) {
+  public static reset = (data: any[], tree: any[], name = '') => {
+    if (!Array.isArray(data) && typeof (data) === 'object') {
       Object.keys(data).forEach(val => {
-        const node = DataProcess.traceTree(val, tree)
-        if (!DataProcess.isEmpty(data[val as any])) {
+        name = name + '-' + val
+        const node = DataProcess.traceTree(name.slice(1), tree)
+        if (node) {
           _.set(node, '$show$', true)
+          if (typeof (data[val]) !== 'object') {
+            name = ''
+          }
         }
-        DataProcess.reset(data[val as any], tree)
+        DataProcess.reset(data[val as any], tree, name)
       })
     }
-    if (data instanceof Array) {
+    if (Array.isArray(data)) {
       data.forEach(val => {
-        const node = DataProcess.traceTree(val, tree)
-        if (!DataProcess.isEmpty(val)) {
-          _.set(node, '$show$', true)
-        }
-        DataProcess.reset(val, tree)
+        DataProcess.reset(val, tree, name)
       })
     }
   }

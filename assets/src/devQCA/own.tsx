@@ -12,6 +12,15 @@ export const filterUpList = (hf: H_Form) => {
       }
     },
     {
+      label: 'NAME',
+      name: 'aaa',
+      $show$: false,
+      $type$: 'input',
+      $componentOptions$: {
+        suffix: 'LOVE'
+      }
+    },
+    {
       label: 'AGE',
       name: 'age',
       $type$: 'select',
@@ -43,12 +52,13 @@ export const filterUpList = (hf: H_Form) => {
     {
       label: 'SEX',
       name: 'sex',
-      $type$: 'formList',
+      $type$: 'formlist',
       $componentOptions$: {
-        children: [
+        btnName: 'aa',
+        formList: [
           {
             label: 'Name',
-            name: 'name',
+            name: 'aa',
           }
         ]
       }

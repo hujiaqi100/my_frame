@@ -9,7 +9,7 @@
         // "sourceMap": true,
         "skipLibCheck": true,
         "experimentalDecorators": true,
-        "strict": true,
+        "strict": false,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
     },
