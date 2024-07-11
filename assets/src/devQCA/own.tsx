@@ -97,7 +97,7 @@ export const queryList = (query: Function, hf: H_Form) => {
       name: '添加',
       danger: true,
       cb: function () {
-        console.log(hf.getForms());
+        console.log(hf.getForm(filterUpList.formName).getFieldsValue());
 
       }
     }

@@ -21,18 +21,16 @@ const FormList = (props) => {
             const type = _.get(item, '$type$', '')
             const show = _.get(item, '$show$') || !_.has(item, '$show$')
             const componentOptions = _.get(item, '$componentOptions$', {})
-            const _value = _.get(value[_idx], item_name, void 0)
-            _.set(componentOptions, 'value', _value)
             return (
               <>
                 {
                   show ?
                     <Form.Item key={name + idx + key} {...restField} {..._item} name={[name, item_name]}>
                       {hc.getComponents(type, { ...componentOptions }, h_form)}
-                      <MinusCircleOutlined style={{ paddingLeft: '12px' }} onClick={() => remove(name)} />
                     </Form.Item>
                     : <></>
                 }
+                <MinusCircleOutlined style={{ paddingLeft: '12px' }} onClick={() => remove(name)} />
               </>
             )
           })

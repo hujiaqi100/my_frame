@@ -86,15 +86,4 @@ const Page = memo(() => {
 
     )
 }, () => true)
-Page.loadData = () => {
-    return [
-        {
-            name: 'pageList',
-            url: '/kg-economics/material/pageList',
-            params: initPage,
-            data: void 0
-        }
-    ]
-}
-
 export default Page;

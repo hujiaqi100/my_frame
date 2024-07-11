@@ -30,16 +30,15 @@ export class H_Components {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getComponents(type: string | undefined, args: any, h_form: any = {}) {
     const _args = DataProcess.removeSigns(args)
     if (!type) {
       const ReactNode = this.components['input']
-      return React.cloneElement(ReactNode, { ..._args, h_form })
+      return React.cloneElement(ReactNode, { ...ReactNode.props, ..._args, h_form })
     } else {
       const ReactNode = this.components[type]
       if (!ReactNode) throw new Error('没有可选组件')
-      return React.cloneElement(ReactNode, { ..._args, h_form })
+      return React.cloneElement(ReactNode, { ...ReactNode.props, ..._args, h_form })
     }
   }
   registerComponent = (type: string, RN: any) => {
