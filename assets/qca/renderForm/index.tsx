@@ -56,12 +56,9 @@ export default class H_Form {
   }
   private WarpItem = (type, label) => {
     const Dom = ({ children }) => {
-      return <div style={{ display: 'flow', alignItems: 'center' }}>
-        {label} :
-        <div style={{ position: 'relative', left: 80, bottom: 24 }}>
-          {children}
-        </div>
-      </div>
+      return <Form.Item label={label}>
+                {children}
+      </Form.Item>
     }
     switch (type) {
       case 'formlist':

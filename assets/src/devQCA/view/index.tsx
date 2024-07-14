@@ -41,10 +41,9 @@ const Detail = ({ close, ..._props }) => {
         loading={load}
         width={700}
         onOk={() => {
-            console.log(hf.getForm('form0').getFieldsValue({ strict: true }));
 
             const value = hf.operatorFormValue('form0', 'getFieldsValue', { strict: true })
-            // console.log(value);
+            console.log(value);
 
         }}
     >

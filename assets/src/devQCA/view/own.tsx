@@ -58,7 +58,7 @@ const config = (params) => {
             }
         },
         {
-            label: 'CONTENT',
+            label: 'CONTENTaaaa',
             name: 'content',
             $type$: 'formlist',
             $componentOptions$: {
@@ -130,7 +130,7 @@ const DetailForm = (props) => {
         config={c}
         setConfig={setC}
         formProps={{
-            labelCol: { span: 3 },
+            labelCol: { span: 4 },
         }}
         reflects={_.get(config, 'reflects')}
     />
