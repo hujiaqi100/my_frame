@@ -16,6 +16,11 @@ interface FormListProps {
   h_form: any;
   btnName: string;
   name: string;
+  labelCol: any;
+  wrapperCol: any;
+  initAddData?: any;
+  addToHead?: boolean;
+  disabled?: boolean;
   [key: string]: any;
 }
 

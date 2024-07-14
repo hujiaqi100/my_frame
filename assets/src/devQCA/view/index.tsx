@@ -18,7 +18,11 @@ const items = [
         formName: 'form1'
     },
 ]
-
+const sleep = (ms) => {
+    return new Promise(res => {
+        setTimeout(res, ms * 1000)
+    })
+}
 const Detail = ({ close, ..._props }) => {
     const { action } = _props
     const [load, setLoad] = useState(false)
@@ -32,7 +36,13 @@ const Detail = ({ close, ..._props }) => {
             }
         })
     }, [])
-
+    useEffect(() => {
+        (async () => {
+            setLoad(true)
+            await sleep(0.05)
+            setLoad(false)
+        })()
+    }, [])
     return <Modal
         open
         onCancel={close}

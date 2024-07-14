@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { H_Form, useInitData } from '../../../qca'
+import { useInitData } from '../../../qca'
 import { Spin } from 'antd'
 const sleep = (ms) => {
     return new Promise(res => {
@@ -70,6 +70,7 @@ const config = (params) => {
                     {
                         label: 'Name',
                         name: 'name',
+                        $show$: false,
                         $type$: 'input',
                         style: { width: 230 },
                         $componentOptions$: {
@@ -114,7 +115,6 @@ const DetailForm = (props) => {
             return {
                 'age': '3', content: [
                     {
-                        name: 'sdadds',
                         age: 3
                     },
                 ]
