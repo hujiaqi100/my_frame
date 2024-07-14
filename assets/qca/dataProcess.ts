@@ -1,8 +1,17 @@
 import _ from 'lodash'
 import H_Form from './renderForm';
 export class DataProcess {
-  private static isEmpty = (value: null | undefined) => {
+  public static isEmpty = (value: null | undefined) => {
     return value === null || value === undefined
+  }
+  public static getType = (variable: any) => {
+    if (Array.isArray(variable)) {
+      return 'Array';
+    } else if (variable !== null && typeof variable === 'object') {
+      return 'Object';
+    } else {
+      return 'Neither';
+    }
   }
   public static getReflect = (result: any[], hf: H_Form, formName: string) => {
     const { config, setConfig } = hf.getConfig(formName)
@@ -26,7 +35,7 @@ export class DataProcess {
         }
       }
     })
-    setConfig(()=>_.cloneDeep(config))
+    setConfig(() => _.cloneDeep(config))
 
   }
   public static traceTree = (name: string, data: any[]): any => {

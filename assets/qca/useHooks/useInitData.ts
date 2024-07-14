@@ -1,53 +1,50 @@
 import { useState, useEffect, useMemo } from 'react'
 import _ from 'lodash'
+import { DataProcess } from '../dataProcess'
 const initTree = async (data: any) => {
     if (!data) return
-    if (data instanceof Object) {
+    if (DataProcess.getType(data) === 'Object') {
         for (const val of Object.keys(data)) {
             if (_.has(data[val], '$initData$')) {
                 const initialization: Function = _.get(data[val], '$initData$')
                 await initialization.bind(data[val])()
             }
-            initTree(data[val])
+            await initTree(data[val])
         }
     }
-    if (data instanceof Array) {
+    if (DataProcess.getType(data) === 'Array') {
         for (const val of data) {
             if (_.has(val, '$initData$')) {
                 const initialization: Function = _.get(val, '$initData$')
                 await initialization.bind(val)()
             }
-            initTree(val)
+            await initTree(val)
         }
     }
 }
-export const useInitData = (config: any, params, init: () => any) => {
-    const _c = useMemo(() => config(params), [])
-    const [cc, setCc] = useState(_c);
-    const [data, setData] = useState()
-    const [done, setDone] = useState<boolean | undefined>()
+export const useInitData = (config: any, params, init: (name: string) => any) => {
+    const [cc, setCc] = useState(config(params));
+    const [done, setDone] = useState<boolean | undefined>(true)
     const hf = useMemo(() => {
         if ('hf' in params) {
             return params.hf
         } else {
-            throw new Error('config params must includes hf where instance of H_form')
+            throw new Error('config params must includes hf which instance of H_form')
         }
     }, [])
     useEffect(() => {
         (async () => {
             const _cc = _.cloneDeep(config(params))
-            setDone(true)
+            setDone(false)
             await initTree(_cc)
-            const data = await init()
+            const data = await init(config.formName)
             if (data) {
-                setData(() => data)
+                hf.operatorFormValue(config.formName, 'setFieldsValue', data)
             }
             const dd = hf.echoData(data, _cc)
+            setDone(true)
             setCc(() => dd)
         })()
     }, []);
-    useEffect(() => {
-        hf.operatorFormValue(config.formName, 'setFieldsValue', data)
-    }, [data])
     return [cc, setCc, done];
 }

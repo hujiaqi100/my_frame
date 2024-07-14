@@ -1,29 +1,54 @@
-import { Modal } from 'antd'
-import { config } from './own'
-import { useMemo } from 'react'
-import { H_Form, useInitData } from '../../../qca'
+import { Modal, Tabs } from 'antd'
+import DetailForm from './own'
+import _ from 'lodash'
+import { H_Form } from '../../../qca'
+import { useEffect, useMemo, useState } from 'react'
+
+
+const items = [
+    {
+        label: 'form0',
+        key: '0',
+        formName: 'form0'
+    }
+    ,
+    {
+        label: 'form1',
+        key: '1',
+        formName: 'form1'
+    },
+]
+
 const Detail = ({ close, ..._props }) => {
     const { action } = _props
+    const [load, setLoad] = useState(false)
     const hf = useMemo(() => new H_Form, [])
-    const { RenderForm } = hf
-    const init = () => {
-        return { name: '2' }
-    }
-    const [c, setC] = useInitData(config, { hf, action }, init)
+    const _items = useMemo(() => {
+        return items.map(val => {
+            return {
+                ...val,
+                forceRender: true,
+                children: <DetailForm hf={hf} action={action} formName={val.formName} />
+            }
+        })
+    }, [])
+
     return <Modal
         open
         onCancel={close}
         getContainer={document.getElementById('app')}
         title='detail'
+        loading={load}
+        width={700}
         onOk={() => {
-            console.log(hf.operatorFormValue(config.formName, 'getFieldsValue', { strict: true }));
+            console.log(hf.getForm('form0').getFieldsValue({ strict: true }));
+
+            const value = hf.operatorFormValue('form0', 'getFieldsValue', { strict: true })
+            // console.log(value);
+
         }}
     >
-        <RenderForm
-            formName={config.formName}
-            config={c}
-            setConfig={setC}
-        />
+        <Tabs defaultActiveKey='0' items={_items} />
     </Modal>
 }
 export default Detail
