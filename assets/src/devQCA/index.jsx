@@ -1,27 +1,28 @@
-import React, { useState, memo, useEffect, useMemo } from 'react'
+import React, { useState, memo, useEffect, useMemo, useCallback } from 'react'
 import { H_Layout } from '@/qca'
 import { getPageList } from './services'
 import _ from 'lodash'
 import { H_Form, useInitData } from '../../qca'
 import { filterUpList, queryList, filterDownList, col } from './own'
-import { message } from 'antd'
+import { Button, message } from 'antd'
 const initPage = {
     current: 1,
     size: 30
 }
-const Page = memo(() => {
+const Page = () => {
     const [load, setLoad] = useState(false)
     const [data, setData] = useState()
-    const hf = useMemo(() => {
-        return new H_Form
-    }, [])
+    const hf = useMemo(() => new H_Form, [])
+    const RenderForm = useMemo(() => hf.RenderForm, [])
     const init = async () => {
-        const data = { name: '1', aaa: '2', age: '1', sex: [{ aa: '1', key: '1' }] }
+        const data = { name: '1', age: '1', sex: [{ name: '1', key: '1' }] }
         return await data
     }
-    const [up, setUp, upDone] = useInitData(filterUpList, hf, init)
-    const [down, setDown, downDone] = useInitData(filterDownList, hf, init)
-
+    const params = {
+        hf
+    }
+    const [up, setUp, upDone] = useInitData(filterUpList, params, init)
+    const [down, setDown, downDone] = useInitData(filterDownList, { hf }, init)
     const handleQuery = async (params) => {
         setLoad(true)
         try {
@@ -47,25 +48,28 @@ const Page = memo(() => {
     useEffect(() => {
         handleQuery()
     }, [])
+    const [c, setC] = useState(0)
     const layoutDom = (
         <H_Layout>
             <H_Layout.Block>
+                <Button onClick={() => setC(c + 1)}>aa</Button>
             </H_Layout.Block>
             <H_Layout.Filter
                 query={queryList(handleQuery, hf)}
-                filterUp={hf.renderForm({
-                    formName: filterUpList.formName,
-                    config: up,
-                    setConfig: setUp,
-                    formProps: { className: 'flex' }
-                })}
-                filterDown={hf.renderForm(
-                    {
-                        formName: filterDownList.formName,
-                        config: down,
-                        setConfig: setDown,
-                        formProps: { className: 'flex flex-wrap' }
-                    })}
+                filterUp={<RenderForm
+                    formName={filterUpList.formName}
+                    config={up}
+                    setConfig={setUp}
+                    formProps={{ className: 'flex' }}
+                    reflects={filterUpList.reflects}
+                />}
+                filterDown={
+                    <RenderForm
+                        formName={filterDownList.formName}
+                        config={down}
+                        setConfig={setDown}
+                        formProps={{ className: 'flex flex-wrap' }}
+                    />}
             />
             <H_Layout.Table loading={load} dataSource={_.get(data, 'list', [])} columns={col(hf) || []} />
             <H_Layout.Footer
@@ -85,5 +89,5 @@ const Page = memo(() => {
         </div>
 
     )
-}, () => true)
+}
 export default Page;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import _ from 'lodash'
 const initTree = async (data: any) => {
     if (!data) return
@@ -21,23 +21,33 @@ const initTree = async (data: any) => {
         }
     }
 }
-export const useInitData = (config: any, hf, init) => {
-    const [cc, setCc] = useState(config(hf));
+export const useInitData = (config: any, params, init: () => any) => {
+    const _c = useMemo(() => config(params), [])
+    const [cc, setCc] = useState(_c);
     const [data, setData] = useState()
     const [done, setDone] = useState<boolean | undefined>()
+    const hf = useMemo(() => {
+        if ('hf' in params) {
+            return params.hf
+        } else {
+            throw new Error('config params must includes hf where instance of H_form')
+        }
+    }, [])
     useEffect(() => {
         (async () => {
-            const _cc = _.cloneDeep(config(hf))
+            const _cc = _.cloneDeep(config(params))
             setDone(true)
             await initTree(_cc)
             const data = await init()
-            setData(() => data)
+            if (data) {
+                setData(() => data)
+            }
             const dd = hf.echoData(data, _cc)
             setCc(() => dd)
         })()
     }, []);
     useEffect(() => {
-        hf.getForm(config.formName).setFieldsValue(data)
+        hf.operatorFormValue(config.formName, 'setFieldsValue', data)
     }, [data])
     return [cc, setCc, done];
 }

@@ -4,12 +4,10 @@ export class DataProcess {
   private static isEmpty = (value: null | undefined) => {
     return value === null || value === undefined
   }
-  public static getReflect = (result: any[], hf: H_Form) => {
+  public static getReflect = (result: any[], hf: H_Form, formName: string) => {
+    const { config, setConfig } = hf.getConfig(formName)
     result.forEach((val: any) => {
       const { target } = val
-      const source = _.get(val, 'source', '')
-      const config = _.get(hf, `forms.${source}.config`, [])
-      const setConfig = _.get(hf, `forms.${source}.setConfig`, [])
       if (_.get(val, 'condition')) {
         if (target instanceof Array) {
           target.forEach(ele => {
@@ -18,7 +16,6 @@ export class DataProcess {
         } else {
           _.set(DataProcess.traceTree(target, config), '$show$', true)
         }
-        setConfig(() => _.cloneDeep(config))
       } else {
         if (target instanceof Array) {
           target.forEach(ele => {
@@ -27,9 +24,10 @@ export class DataProcess {
         } else {
           _.set(DataProcess.traceTree(target, config), '$show$', false)
         }
-        setConfig(() => _.cloneDeep(config))
       }
     })
+    setConfig(()=>_.cloneDeep(config))
+
   }
   public static traceTree = (name: string, data: any[]): any => {
     const nameList = name.split('-')

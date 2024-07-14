@@ -1,7 +1,20 @@
 import _ from 'lodash'
 import H_Form from '../../qca/renderForm'
-export const filterUpList = (hf: H_Form) => {
-  _.set(filterUpList, 'formName', 'up')
+import Detail from './view'
+import create from '../components/create'
+export const filterUpList = ({ hf, ...params }) => {
+  const formName = 'up'
+  _.set(filterUpList, 'formName', formName)
+  _.set(filterUpList, 'reflects', {
+    'age-sex': function ([c, v]) {
+      return [
+        {
+          condition: c == '3',
+          target: ['aaa']
+        }
+      ]
+    }
+  })
   return [
     {
       label: 'NAME',
@@ -12,7 +25,7 @@ export const filterUpList = (hf: H_Form) => {
       }
     },
     {
-      label: 'NAME',
+      label: 'aaass',
       name: 'aaa',
       $show$: false,
       $type$: 'input',
@@ -24,20 +37,6 @@ export const filterUpList = (hf: H_Form) => {
       label: 'AGE',
       name: 'age',
       $type$: 'select',
-      $reflect$: function ([c, v]: any) {
-        return [
-          {
-            condition: c == '18',
-            source: 'up',
-            target: 'sex-name'
-          },
-          {
-            condition: c == '18',
-            source: 'down',
-            target: ['age']
-          },
-        ]
-      },
       $componentOptions$: {
         $initData$: async function () {
           const result = await [{ label: '18', value: '18' }, { label: '3', value: '3' }]
@@ -45,33 +44,18 @@ export const filterUpList = (hf: H_Form) => {
           _.set(this, 'options', result)
         },
         onChange: function () {
-          hf.onReflect(_.get(filterUpList, 'formName', ''), 'age')(arguments)
+          hf.onReflect(formName, 'age-sex')(arguments)
         }
       }
     },
-    {
-      label: 'SEX',
-      name: 'sex',
-      $type$: 'formlist',
-      $componentOptions$: {
-        btnName: 'aa',
-        formList: [
-          {
-            label: 'Name',
-            name: 'aa',
-          }
-        ]
-      }
-    }
   ]
 }
-export const filterDownList = (hf: H_Form) => {
+export const filterDownList = ({ hf }) => {
   _.set(filterDownList, 'formName', 'down')
   return [
     {
       label: 'NAME',
       name: 'name',
-
       $type$: 'input',
       $componentOptions$: {
         suffix: 'LOVE'
@@ -81,7 +65,6 @@ export const filterDownList = (hf: H_Form) => {
       label: 'AGE',
       name: 'age',
       $type$: 'select',
-      $show$: false,
       $componentOptions$: {
         $initData$: async function () {
           const result = await [{ label: '18', value: '18' }]
@@ -97,7 +80,7 @@ export const queryList = (query: Function, hf: H_Form) => {
       name: '添加',
       danger: true,
       cb: function () {
-        console.log(hf.getForm(filterUpList.formName).getFieldsValue());
+        console.log(hf.operatorFormValue(filterUpList.formName, 'getFieldsValue', { strict: true }));
 
       }
     }
@@ -109,7 +92,16 @@ export const col = () => {
       title: 'aa',
       render: () => {
         return <a onClick={() => {
-        }}>aa</a>
+          create({ action: 'view' }, Detail)
+        }}>查看</a>
+      }
+    },
+    {
+      title: 'aa',
+      render: () => {
+        return <a onClick={() => {
+          create({ action: 'edit' }, Detail)
+        }}>编辑</a>
       }
     }
   ]

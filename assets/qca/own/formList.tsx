@@ -4,19 +4,31 @@ import { DataProcess } from '../dataProcess'
 import { H_Components } from '../components'
 import _ from 'lodash'
 import { useMemo } from 'react'
+/**
+ *  {
+      label: 'SEX',
+      name: 'sex',
+      $type$: 'formlist',
+      $componentOptions$: {
+        btnName: 'aa',
+        formList: [
+          {
+            label: 'Name',
+            name: 'name',
+          }
+        ]
+      }
+    }
+ */
 const FormList = (props) => {
-  const { formList, h_form, btnName, name, listName, value, ..._props } = props
+  const { formList, h_form, btnName, name: listName, ..._props } = props
   const hc = useMemo(() => new H_Components, [])
-  return <Form.List name={name} {..._props} >
+  return <Form.List name={listName} {..._props} >
     {(fields, { add, remove }, { errors }) => (
       <>
         {fields.map(({ key, name, ...restField }, _idx) => (
           formList.map((item, idx) => {
             const item_name = _.get(item, 'name', '')
-            if (_.has(item, '$reflect$') && 'hf' in h_form && 'forName' in h_form) {
-              const { hf, formName } = h_form
-              hf.setReflect(formName, listName + '-' + item_name, _.get(item, '$reflect$'))
-            }
             const _item = DataProcess.removeSigns(item)
             const type = _.get(item, '$type$', '')
             const show = _.get(item, '$show$') || !_.has(item, '$show$')
@@ -25,7 +37,7 @@ const FormList = (props) => {
               <>
                 {
                   show ?
-                    <Form.Item key={name + idx + key} {...restField} {..._item} name={[name, item_name]}>
+                    <Form.Item key={idx} {...restField} {..._item} name={[name, item_name]}>
                       {hc.getComponents(type, { ...componentOptions }, h_form)}
                     </Form.Item>
                     : <></>
