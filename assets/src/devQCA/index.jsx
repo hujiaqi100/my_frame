@@ -1,4 +1,4 @@
-import React, { useState, memo, useEffect, useMemo, useCallback } from 'react'
+import React, { useState,  useEffect, useMemo } from 'react'
 import { H_Layout } from '@/qca'
 import { getPageList } from './services'
 import _ from 'lodash'
@@ -52,7 +52,7 @@ const Page = () => {
     const layoutDom = (
         <H_Layout>
             <H_Layout.Block>
-                <Button onClick={() => setC(c + 1)}>aa</Button>
+                <Button onClick={() => setC(c + 1)}>custom field area</Button>
             </H_Layout.Block>
             <H_Layout.Filter
                 query={queryList(handleQuery, hf)}
@@ -73,6 +73,7 @@ const Page = () => {
             />
             <H_Layout.Table loading={load} dataSource={_.get(data, 'list', [])} columns={col(hf) || []} />
             <H_Layout.Footer
+                carry = {[<Button>test1</Button>,<Button>test2</Button>]}
                 total={_.get(data, 'total', 0)}
                 current={_.get(data, 'current', initPage.current)}
                 pageSize={_.get(data, 'size', initPage.size)}

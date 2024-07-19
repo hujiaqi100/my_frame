@@ -80,7 +80,8 @@ export const queryList = (query: Function, hf: H_Form) => {
       name: '添加',
       danger: true,
       cb: function () {
-        console.log(hf.operatorFormValue(filterUpList.formName, 'getFieldsValue', { strict: true }));
+        // console.log(hf.operatorFormValue(filterUpList.formName, 'setFieldsValue', {'name': '1'}));
+        hf.operatorFormValue(filterUpList.formName, 'setFieldValue', 'name','2')
 
       }
     }
